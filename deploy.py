@@ -5,7 +5,7 @@ import numpy as np
 # loads saved model
 model = joblib.load('model.joblib')
 
-st.title("🌿 Iris Species Predictor")
+st.title("🌿 Flower Predictor")
 st.write("Enter the measurements to identify the flower species.")
 
 # input fields for the 4 features
@@ -23,3 +23,4 @@ if st.button("Predict"):
     
     # result
     st.success(f"The predicted species is: *{prediction[0]}*")
+
