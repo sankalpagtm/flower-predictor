@@ -1,17 +1,25 @@
 import streamlit as st
 import joblib
+import numpy as np
 
-st.title("Species prediction")
+# loads saved model
+model = joblib.load('model.joblib')
 
-model = joblib.load("model.joblib")
+st.title("🌿 Iris Species Predictor")
+st.write("Enter the measurements to identify the flower species.")
 
-sepal_length = st.number_input("Sepal Length", min_value=0.0, max_value=10.0, value=5.0)
-sepal_width = st.number_input("Sepal Width", min_value=0.0, max_value=10.0, value=3.5)
-petal_length = st.number_input("Petal Length", min_value=0.0, max_value=10.0, value=1.5)
-petal_width = st.number_input("Petal Width", min_value=0.0, max_value=10.0, value=0.2)
-
-sample = [[sepal_length, sepal_width, petal_length, petal_width]]
+# input fields for the 4 features
+sepal_l = st.number_input("Sepal Length", value=5.0)
+sepal_w = st.number_input("Sepal Width", value=3.0)
+petal_l = st.number_input("Petal Length", value=4.0)
+petal_w = st.number_input("Petal Width", value=1.0)
 
 if st.button("Predict"):
-    prediction = model.predict(sample)[0]
-    st.success(f"Predicted class: {prediction}")
+    # input into 2D
+    features = np.array([[sepal_l, sepal_w, petal_l, petal_w]])
+    
+    # prediction 
+    prediction = model.predict(features)
+    
+    # result
+    st.success(f"The predicted species is: *{prediction[0]}*")
